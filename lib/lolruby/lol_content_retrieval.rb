@@ -24,6 +24,24 @@ class LolContentRetrieval
     return site_hash_array
   end
 
+  def get_featured_content_by_site(site_id,page,count)
+    featured_content_url = site_id + "/featured/#{page}/#{count}"
+    featured_content_response = RestClient.get featured_content_url, :DeveloperKey => api_key
+    featured_content_xml = Nokogiri::XML(featured_content_response)
+    featured_content_assets = featured_content_xml.xpath("//Asset")
+    assets_array = Array.new
+    featured_content_assets.each do |asset|
+      asset_hash = Hash.new
+      asset.children.each do |child|
+        if child.element?
+          asset_hash.store(child.name,child.inner_text)
+        end
+      end
+      assets_array << asset_hash
+    end
+    return assets_array
+  end
+
   def get_categories
     category_url = "http://api.cheezburger.com/xml/category"
     category_response = RestClient.get category_url, :DeveloperKey => api_key
@@ -70,5 +88,9 @@ class LolContentRetrieval
       picture_hash_array << picture_hash
     end
     return picture_hash_array
+  end
+
+  def get_favorites_by_user(username)
+    #TODO: finish this once user is done
   end
 end
