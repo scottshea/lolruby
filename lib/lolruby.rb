@@ -22,13 +22,4 @@ module Lolruby
       end
     end
   end
-
-  class LolAuthenticate
-    def self.authenticate
-      authentication_url = "http://api.cheezburger.com/xml/authenticationsession"
-      resource = RestClient::Resource.new authentication_url
-      meow = resource.post :content_length => 0, header => {:DeveloperKey => "8afc3c96-de44-4d04-95c7-c726fc09a8a5"}
-      return meow
-    end
-  end
 end
