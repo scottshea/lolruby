@@ -24,5 +24,6 @@ Gem::Specification.new do |s|
   s.add_dependency "activesupport"
   s.add_dependency "rest-client"
   s.add_dependency "nokogiri"
+  s.add_dependency "builder"
   # s.add_runtime_dependency "rest-client"
 end
