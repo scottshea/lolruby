@@ -11,7 +11,10 @@ class LolContentSubmission
 
   def submit_picture
     picture_submission_url = "http://api.cheezburger.com/xml/picture"
-    submission_response = RestClient.post picture_submission_url
+    submission_response = RestClient.post(picture_submission_url, xml_data)
+
+
+    #submission_response = RestClient.post picture_submission_url, :DeveloperKey => api_key,
   end
 
   def build_picture_xml(lol_picture_submission)
@@ -21,8 +24,8 @@ class LolContentSubmission
     xml.instruct! :xml, :encoding => "ASCII"
     xml.EncodedPicture do |element|
       element.Title lol_picture_submission.title
-      element.Description lol_picture_submission.Description
-      element.Attribution lol_picture_submission.Attribution
+      element.Description lol_picture_submission.description
+      element.Attribution lol_picture_submission.attribution
       element.AttributionUrl
       element.Base64EncodedImage encoded_image
     end

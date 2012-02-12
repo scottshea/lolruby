@@ -8,86 +8,60 @@ class LolContentRetrieval
 
   def get_sites
     sites_url = "http://api.cheezburger.com/xml/site"
-    sites_response = RestClient.get sites_url, :DeveloperKey => api_key
-    sites_raw_xml = Nokogiri::XML(sites_response)
-    site_hash_array = Array.new
-    sites_parsed_xml = sites_raw_xml.xpath("//Site")
-    sites_parsed_xml.each do |site|
-      site_hash = Hash.new
-      site.children.each do |child|
-        if child.element?
-          site_hash.store(child.name, child.inner_text)
-        end
-      end
-      site_hash_array << site_hash
-    end
-    return site_hash_array
-  end
+    sites_xpath = "//Site"
+    site_hash_array = get_lol_xml(sites_url, sites_xpath)
 
-  def get_featured_content_by_site(site_id,page,count)
-    featured_content_url = site_id + "/featured/#{page}/#{count}"
-    featured_content_response = RestClient.get featured_content_url, :DeveloperKey => api_key
-    featured_content_xml = Nokogiri::XML(featured_content_response)
-    featured_content_assets = featured_content_xml.xpath("//Asset")
-    assets_array = Array.new
-    featured_content_assets.each do |asset|
-      asset_hash = Hash.new
-      asset.children.each do |child|
-        if child.element?
-          asset_hash.store(child.name,child.inner_text)
-        end
-      end
-      assets_array << asset_hash
-    end
-    return assets_array
+    return site_hash_array
   end
 
   def get_categories
     category_url = "http://api.cheezburger.com/xml/category"
-    category_response = RestClient.get category_url, :DeveloperKey => api_key
-    category_xml = Nokogiri::XML(category_response)
-    cheezburger_categories_xml = category_xml.xpath("//CategoryName")
-    cheezburger_categories = Array.new
-    cheezburger_categories_xml.each do |category|
-      cheezburger_categories << category.inner_text
-    end
-    return cheezburger_categories
-  end
+    category_xpath = "//CategoryDetail"
+    cheezburger_categories = get_lol_xml(category_url, category_xpath)
 
-  def get_random_lol(category,count = 1)
-    random_lol_url = "http://api.cheezburger.com/xml/category/#{category}/lol/random/#{count}"
-    random_lol_response = RestClient.get random_lol_url, :DeveloperKey => api_key
-    random_lol_xml = Nokogiri::XML(random_lol_response)
-    lol_hash_array =  Array.new
-    lol_xml = random_lol_xml.xpath("//Picture")
-    lol_xml.each do |individual_lol|
-      lol_hash = Hash.new
-      individual_lol.children.each do |child|
-        if child.element?
-          lol_hash.store(child.name, child.inner_text)
-        end
-      end
-      lol_hash_array << lol_hash
-    end
-    return lol_hash_array
+    return cheezburger_categories
   end
 
   def get_random_picture(category,count = 1)
     random_picture_url = "http://api.cheezburger.com/xml/category/#{category}/picture/random/#{count}"
-    random_picture_response = RestClient.get random_picture_url, :DeveloperKey => api_key
-    random_picture_xml = Nokogiri::XML(random_picture_response)
-    picture_hash_array =  Array.new
-    picture_xml = random_picture_xml.xpath("//Picture")
-    picture_xml.each do |individual_lol|
-      picture_hash = Hash.new
-      individual_lol.children.each do |child|
+    random_picture_xpath = "//Picture"
+    picture_hash_array = get_lol_xml(random_picture_url, random_picture_xpath)
+
+    return picture_hash_array
+  end
+
+  def get_random_lol(category,count = 1)
+    random_lol_url = "http://api.cheezburger.com/xml/category/#{category}/lol/random/#{count}"
+    random_picture_xpath = "//Picture"
+    lol_hash_array = get_lol_xml(random_lol_url, random_picture_xpath)
+
+    return lol_hash_array
+  end
+
+  def get_featured_content_by_site(site_id,page,count)
+    featured_content_url = site_id + "/featured/#{page}/#{count}"
+    featured_content_xpath = "//Asset"
+    assets_array = get_lol_xml(featured_content_url, featured_content_xpath)
+
+    return assets_array
+  end
+
+  def get_lol_xml(url,xpath)
+    #puts "Passed xpath: #{xpath}; url: #{url}"
+    parsed_xml = Nokogiri::XML(RestClient.get url, :DeveloperKey => api_key).xpath(xpath)
+    #puts "XML: #{parsed_xml.inspect}"
+    parsed_xml.map do |element|
+      hash = Hash.new
+      #puts "Element: #{element.class}; #{element.inspect}"
+      element.children.each do |child|
+        #puts "Child 1: #{child.class}; #{child.element?.inspect}; #{child.inspect}"
         if child.element?
-          picture_hash.store(child.name, child.inner_text)
+          #puts "Child: #{child.name}; #{child.inner_text}"
+          hash.store(child.name, child.inner_text)
         end
       end
-      picture_hash_array << picture_hash
+      hash
     end
-    return picture_hash_array
   end
 
   def get_favorites_by_user(username)

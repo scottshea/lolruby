@@ -6,7 +6,7 @@ describe LolContentRetrieval do
   it "gets the lol categories" do
     lol_categories = LolContentRetrieval.new
     lol_categories.api_key = YAML.load_file("lolapikey.yaml")["api_key"]
-    lol_categories.get_categories.should include("Cats")
+    lol_categories.get_categories[0].keys.should include("CategoryName")
   end
 
   it "gets a random lol" do
