@@ -1,13 +1,11 @@
-class LolContentSubmission
-  require "lolruby/version"
-  require "lolruby/lol_picture_submission"
-  require "rest-client"
-  require "nokogiri"
-  require "active_support/core_ext"
-  require "builder"
-  require "base64"
+require "lolruby/lol_base"
+require "lolruby/version"
+require "lolruby/lol_picture_submission"
+require "builder"
+require "base64"
 
-  attr_accessor :api_key
+class LolContentSubmission < Lolruby::LolBase
+
 
   def submit_picture
     picture_submission_url = "http://api.cheezburger.com/xml/picture"

@@ -1,10 +1,6 @@
-class LolContentRetrieval
-  require "lolruby/version"
-  require "rest-client"
-  require "nokogiri"
-  require "active_support/core_ext"
+require "lolruby/lol_base"
 
-  attr_accessor :api_key
+class LolContentRetrieval < Lolruby::LolBase
 
   def get_sites
     sites_url = "http://api.cheezburger.com/xml/site"
