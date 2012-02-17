@@ -19,6 +19,7 @@ class LolContentRetrieval < Lolruby::LolBase
   end
 
   def get_random_picture(category,count = 1)
+    # according to http://developer.cheezburger.com/forum/read/110428 the random apis are slow
     random_picture_url = "http://api.cheezburger.com/xml/category/#{category}/picture/random/#{count}"
     random_picture_xpath = "//Picture"
     picture_hash_array = get_lol_xml(random_picture_url, random_picture_xpath)
@@ -27,6 +28,7 @@ class LolContentRetrieval < Lolruby::LolBase
   end
 
   def get_random_lol(category,count = 1)
+    # according to http://developer.cheezburger.com/forum/read/110428 the random apis are slow
     random_lol_url = "http://api.cheezburger.com/xml/category/#{category}/lol/random/#{count}"
     random_picture_xpath = "//Picture"
     lol_hash_array = get_lol_xml(random_lol_url, random_picture_xpath)
@@ -40,24 +42,6 @@ class LolContentRetrieval < Lolruby::LolBase
     assets_array = get_lol_xml(featured_content_url, featured_content_xpath)
 
     return assets_array
-  end
-
-  def get_lol_xml(url,xpath)
-    #puts "Passed xpath: #{xpath}; url: #{url}"
-    parsed_xml = Nokogiri::XML(RestClient.get url, :DeveloperKey => api_key).xpath(xpath)
-    #puts "XML: #{parsed_xml.inspect}"
-    parsed_xml.map do |element|
-      hash = Hash.new
-      #puts "Element: #{element.class}; #{element.inspect}"
-      element.children.each do |child|
-        #puts "Child 1: #{child.class}; #{child.element?.inspect}; #{child.inspect}"
-        if child.element?
-          #puts "Child: #{child.name}; #{child.inner_text}"
-          hash.store(child.name, child.inner_text)
-        end
-      end
-      hash
-    end
   end
 
   def get_favorites_by_user(username)

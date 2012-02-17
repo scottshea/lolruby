@@ -1,6 +1,5 @@
 require "lolruby/lol_content_submission"
-require "rspec"
-require "yaml"
+require "spec_helper"
 
 describe LolContentSubmission do
 
@@ -12,7 +11,7 @@ describe LolContentSubmission do
     picture.description = "It's a koala"
     picture.attribution = "Windows Sample Pictures"
     response = xml_builder.build_picture_xml(picture)
-    puts response.class
+    puts "Class: " + response.class
 
     true.should == false
   end

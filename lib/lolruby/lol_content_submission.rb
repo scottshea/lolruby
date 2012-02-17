@@ -27,6 +27,7 @@ class LolContentSubmission < Lolruby::LolBase
       element.AttributionUrl
       element.Base64EncodedImage encoded_image
     end
-    puts xml.inspect
+    #puts xml.inspect
+    return xml
   end
 end

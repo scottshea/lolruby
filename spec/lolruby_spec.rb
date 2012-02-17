@@ -1,6 +1,5 @@
 require "lolruby"
-require "rspec"
-require "yaml"
+require "spec_helper"
 
 describe Lolruby::Utils do
   it "tests the cheezburger response" do

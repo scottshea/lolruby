@@ -1,50 +1,38 @@
 require "lolruby/lol_content_retrieval"
-require "rspec"
-require "yaml"
+require "spec_helper"
 
 describe LolContentRetrieval do
+  before :each do
+    @lol_content = LolContentRetrieval.new
+    @lol_content.api_key = YAML.load_file("lolapikey.yaml")["api_key"]
+  end
+
   it "gets the lol categories" do
-    lol_categories = LolContentRetrieval.new
-    lol_categories.api_key = YAML.load_file("lolapikey.yaml")["api_key"]
-    lol_categories.get_categories[0].keys.should include("CategoryName")
+    @lol_content.get_categories[0].keys.should include("CategoryName")
   end
 
   it "gets a random lol" do
-    lol_random_lol = LolContentRetrieval.new
-    lol_random_lol.api_key = YAML.load_file("lolapikey.yaml")["api_key"]
-    returned_lol = lol_random_lol.get_random_lol("Cats")[0]
-    returned_lol.should include("LolId")
+    @lol_content.get_random_lol("Cats")[0].should include("LolId")
   end
 
   it "gets 10 random lols" do
-    lol_random_lol = LolContentRetrieval.new
-    lol_random_lol.api_key = YAML.load_file("lolapikey.yaml")["api_key"]
-    lol_random_lol.get_random_lol("Cats",10).count.should == 10
+    @lol_content.get_random_lol("Cats",3).count.should == 3
   end
 
   it "gets a random picture" do
-    lol_random_picture = LolContentRetrieval.new
-    lol_random_picture.api_key = YAML.load_file("lolapikey.yaml")["api_key"]
-    returned_picture = lol_random_picture.get_random_picture("Cats")[0]
-    returned_picture.should include("PictureId")
+    @lol_content.get_random_picture("Cats")[0].should include("PictureId")
   end
 
   it "gets 7 random pictures" do
-    lol_random_picture = LolContentRetrieval.new
-    lol_random_picture.api_key = YAML.load_file("lolapikey.yaml")["api_key"]
-    lol_random_picture.get_random_picture("Cats",7).count.should == 7
+    @lol_content.get_random_picture("Cats",2).count.should == 2
   end
 
   it "gets an array of sites" do
-    lol_sites = LolContentRetrieval.new
-    lol_sites.api_key = YAML.load_file("lolapikey.yaml")["api_key"]
-    lol_sites.get_sites[0].keys.should include("SiteId")
+    @lol_content.get_sites[0].keys.should include("SiteId")
   end
 
   it "gets a hash of featured content for site" do
-    lol_featured_content = LolContentRetrieval.new
-    lol_featured_content.api_key = YAML.load_file("lolapikey.yaml")["api_key"]
-    sites = lol_featured_content.get_sites
-    lol_featured_content.get_featured_content_by_site(sites[1]["SiteId"],1,3)[1].keys.should include("ContentUrl")
+    sites = @lol_content.get_sites
+    @lol_content.get_featured_content_by_site(sites[1]["SiteId"],1,3)[1].keys.should include("ContentUrl")
   end
 end
