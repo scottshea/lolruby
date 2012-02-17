@@ -10,5 +10,6 @@ class LolCaptionData
                 :is_strikethrough,
                 :x_position,
                 :y_position,
+                :text_style,
                 :text
 end

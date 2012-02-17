@@ -1,5 +1,4 @@
 require "lolruby/lol_base"
-require "lolruby/version"
 require "lolruby/lol_picture_submission"
 require "builder"
 require "base64"
