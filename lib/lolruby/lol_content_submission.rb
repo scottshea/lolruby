@@ -6,12 +6,10 @@ require "base64"
 class LolContentSubmission < Lolruby::LolBase
 
 
-  def submit_picture
+  def submit_picture(picture_xml)
     picture_submission_url = "http://api.cheezburger.com/xml/picture"
-    submission_response = RestClient.post(picture_submission_url, xml_data)
-
-
-    #submission_response = RestClient.post picture_submission_url, :DeveloperKey => api_key,
+    submission_response = post_xml(picture_submission_url, picture_xml)
+    puts submission_response.inspect
   end
 
   def build_picture_xml(lol_picture_submission)

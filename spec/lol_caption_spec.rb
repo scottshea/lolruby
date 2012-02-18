@@ -32,14 +32,24 @@ describe LolCaption do
   end
 
   it "gets dimensions of the caption" do
-    @lol_caption.caption_dimensions
+    xml = @lol_caption.build_caption_xml(@caption_data)
+    response = @lol_caption.caption_dimensions(xml)
+    response.should have_node("CaptionDimensions", :count => 1)
+    response.should have_node("Width", :count => 1)
+    response.should have_node("Height", :count => 1)
+  end
+
+  it "gets a preview of the caption" do
+    xml = @lol_caption.build_caption_xml(@caption_data)
+    response = @lol_caption.caption_preview(xml)
+    puts response.inspect
     true.should == false
   end
 
   it "builds a caption xml" do
     xml = @lol_caption.build_caption_xml(@caption_data)
-    puts xml.inspect
-    true.should == false
+    xml.should have_node("caption", :count => 1)
+    xml.should have_node("text", @caption_data.text, :count => 1)
   end
 
 end
