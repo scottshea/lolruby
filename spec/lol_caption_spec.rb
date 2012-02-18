@@ -41,7 +41,7 @@ describe LolCaption do
   end
 
   it "gets a preview of the caption" do
-    ##Testing the hack fro right now
+    ##Testing the hack for right now
     #xml = @lol_caption.build_caption_xml(@caption_data)
     #response = @lol_caption.caption_preview(xml)
     #puts response.inspect

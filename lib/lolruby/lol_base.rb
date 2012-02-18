@@ -26,7 +26,7 @@ module Lolruby
     end
 
     def post_xml(url,xml)
-      RestClient.post(url, xml, {:DeveloperKey => api_key, :content_type => "text/xml", :ClientID => "2165"})
+      RestClient.post(url, xml, {:DeveloperKey => api_key, :content_type => "text/xml"})
     end
   end
 end
