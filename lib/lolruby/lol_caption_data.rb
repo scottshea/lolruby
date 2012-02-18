@@ -11,5 +11,6 @@ class LolCaptionData
                 :x_position,
                 :y_position,
                 :text_style,
-                :text
+                :text,
+                :original_image
 end
