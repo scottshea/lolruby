@@ -25,7 +25,7 @@ describe LolContentSubmission do
 
   it "should submit a picture successfully" do
     xml = @lol_content_submission.build_picture_xml(@picture)
-    response = @lol_content_submission.submit_picture(xml)
+    response = @lol_content_submission.submit_picture(xml, "2053bb50-5b53-4c72-8217-4cc2eef00686")
 
     true.should == false
   end

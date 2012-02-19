@@ -53,7 +53,6 @@ describe LolCaption do
 
   it "builds a caption xml" do
     xml = @lol_caption.build_caption_xml(@caption_data)
-    puts xml.inspect
     xml.should have_node("caption", :count => 1)
     xml.should have_node("text", @caption_data.text, :count => 1)
   end

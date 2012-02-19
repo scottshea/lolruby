@@ -6,9 +6,9 @@ require "base64"
 class LolContentSubmission < Lolruby::LolBase
 
 
-  def submit_picture(picture_xml)
+  def submit_picture(picture_xml, auth_token)
     picture_submission_url = "http://api.cheezburger.com/xml/picture"
-    submission_response = post_xml(picture_submission_url, picture_xml)
+    submission_response = post_xml(picture_submission_url, picture_xml, auth_token)
     puts submission_response.inspect
   end
 
@@ -16,7 +16,7 @@ class LolContentSubmission < Lolruby::LolBase
     encoded_image = Base64.encode64(open(lol_picture_submission.file_path).to_a.join)
 
     xml = Builder::XmlMarkup.new( :indent => 2 )
-    xml.instruct! :xml, :encoding => "ASCII"
+    xml.instruct! :xml, :encoding => "utf-8"
     xml.EncodedPicture do |element|
       element.Title lol_picture_submission.title
       element.Description lol_picture_submission.description
