@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class LolCaptionData
   #this may be an un-necessary class but I could not think of how to do multiple captions in the caption class
   attr_accessor :font_size,

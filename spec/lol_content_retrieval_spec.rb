@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "lolruby/lol_content_retrieval"
 require "spec_helper"
 

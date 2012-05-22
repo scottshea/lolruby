@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "lolruby/lol_content_submission"
 require "spec_helper"
 
@@ -26,7 +27,7 @@ describe LolContentSubmission do
   it "should submit a picture successfully" do
     xml = @lol_content_submission.build_picture_xml(@picture)
     response = @lol_content_submission.submit_picture(xml, "2053bb50-5b53-4c72-8217-4cc2eef00686")
-
+    puts "XX: " + response.inspect
     true.should == false
   end
 end

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "rspec"
 require "yaml"
 require "rspec-hpricot-matchers"

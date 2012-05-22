@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "lolruby/lol_authentication"
 require "spec_helper"
 require "nokogiri"

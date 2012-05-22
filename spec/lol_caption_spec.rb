@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "lolruby/lol_caption"
 require "lolruby/lol_caption_data"
 require "spec_helper"
